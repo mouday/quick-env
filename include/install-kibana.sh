@@ -13,6 +13,10 @@ function install_kibana(){
         return 0
     fi
     
+    # require java
+    source "${QUICK_ENV_INCLUDE}/install-jdk.sh"
+    install_jdk
+
     kibana_version="5.6.16"
 
     # install elasticsearch
@@ -35,12 +39,27 @@ function install_kibana(){
 export KIBANA_HOME="${QUICK_ENV_LOCAL}/kibana-${kibana_version}"
 export PATH="\$KIBANA_HOME/bin:\$PATH"
 EOF
-        source /etc/profile.d/kibana.sh
+    source /etc/profile.d/kibana.sh
 
-        if [[ ! $NGINX_HOME && -d "${NGINX_HOME}/conf/vhost" ]]; then
-            # nginx config
-            cp "${QUICK_ENV_CONFIG}/nginx-kibana.conf" "${NGINX_HOME}/conf/vhost/kibana.conf"
-        fi
+    # nginx config
+    if [[ $NGINX_HOME && -d "${NGINX_HOME}/conf/vhost" ]]; then
+        cp "${QUICK_ENV_CONFIG}/nginx-kibana.conf" "${NGINX_HOME}/conf/vhost/kibana.conf"
+
+        nginx -s reload
+    fi
+
+    # supervisord config
+    if [ -d '/etc/supervisor/conf.d' ]; then
+        cat > /etc/supervisor/conf.d/kibana.ini <<EOF
+[program:kibana]
+directory=${KIBANA_HOME}
+command=${KIBANA_HOME}/bin/kibana
+user=www
+environment=JAVA_HOME=${JAVA_HOME}
+EOF
+        supervisorctl update
+        supervisorctl status
+    fi
 
         # check
         kibana --version

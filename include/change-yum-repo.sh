@@ -22,11 +22,11 @@ function change_yum_repo(){
 
     cp $repo_filename /etc/yum.repos.d/CentOS-Base.repo
     
-    # 3. 运行 yum makecache 生成缓存
-    yum makecache
-
     # 4. 非阿里云ECS用户会出现 Couldn't resolve host 'mirrors.cloud.aliyuncs.com' 信息
     sed -i -e '/mirrors.cloud.aliyuncs.com/d' -e '/mirrors.aliyuncs.com/d' /etc/yum.repos.d/CentOS-Base.repo
+
+    # 3. 运行 yum makecache 生成缓存
+    yum makecache
 
     yum repolist
 }   

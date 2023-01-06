@@ -28,13 +28,12 @@ function install_nginx(){
     create_user_www
 
     # 下载nginx
-
     if [ ! -e $nginx_cache_filename ]; then
         echo "Download nginx"
         wget $nginx_download_url -O $nginx_cache_filename
     fi
 
-    tar -zxvf $nginx_cache_filename -C "${QUICK_ENV_TEMP}"
+    tar -zxf $nginx_cache_filename -C "${QUICK_ENV_TEMP}"
     
     cd $nginx_temp_dir
 
@@ -96,6 +95,6 @@ EOF
     systemctl start nginx
 
     # 查看版本
-    . /etc/profile
+    source /etc/profile.d/nginx.sh
     nginx -v
 }

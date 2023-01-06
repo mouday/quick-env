@@ -12,10 +12,17 @@ function install_elasticsearch(){
         echo 'elasticsearch exists already!'
         return 0
     fi
+
+    # require java
+    source "${QUICK_ENV_INCLUDE}/install-jdk.sh"
+    install_jdk
     
+    # version
+    elasticsearch_version="5.6.16"
+
     # install elasticsearch
-    elasticsearch_cache_filename="${QUICK_ENV_CACHE}/elasticsearch-5.6.16.tar.gz"
-    elasticsearch_download_url="https://repo.huaweicloud.com/elasticsearch/5.6.16/elasticsearch-5.6.16.tar.gz"
+    elasticsearch_cache_filename="${QUICK_ENV_CACHE}/elasticsearch-${elasticsearch_version}.tar.gz"
+    elasticsearch_download_url="https://repo.huaweicloud.com/elasticsearch/${elasticsearch_version}/elasticsearch-${elasticsearch_version}.tar.gz"
 
     if [ ! -e $elasticsearch_cache_filename ]; then
         echo "Download elasticsearch"
@@ -28,26 +35,43 @@ function install_elasticsearch(){
     # env config
     cat > /etc/profile.d/elasticsearch.sh <<EOF
 # elasticsearch
-export ELASTICSEARCH_HOME="${QUICK_ENV_LOCAL}/elasticsearch-5.6.16"
+export ELASTICSEARCH_HOME="${QUICK_ENV_LOCAL}/elasticsearch-${elasticsearch_version}"
 export PATH="\$ELASTICSEARCH_HOME/bin:\$PATH"
 EOF
     source /etc/profile.d/elasticsearch.sh
 
     # nginx config
-    if [[ ! $NGINX_HOME && -d "${NGINX_HOME}/conf/vhost" ]]; then    
+    if [[ $NGINX_HOME && -d "${NGINX_HOME}/conf/vhost" ]]; then    
         cp "${QUICK_ENV_CONFIG}/nginx-elasticsearch.conf" "${NGINX_HOME}/conf/vhost/elasticsearch.conf"
+
+        nginx -s reload
     fi
 
     # supervisord config
-    cat > /etc/supervisor/conf.d/elasticsearch.ini <<EOF
+    if [ -d '/etc/supervisor/conf.d' ]; then
+        cat > /etc/supervisor/conf.d/elasticsearch.ini <<EOF
 [program:elasticsearch]
 directory=${ELASTICSEARCH_HOME}
 command=${ELASTICSEARCH_HOME}/bin/elasticsearch
 user=www
+environment=JAVA_HOME=${JAVA_HOME}
 EOF
-        
-        # check
-        elasticsearch --version
+        supervisorctl update
+        supervisorctl status
+    fi
+    
+    # bugfix: main ERROR Could not register mbeans
+    # https://pengshiyu.blog.csdn.net/article/details/86557744
+    # 创建www用户
+    source "${QUICK_ENV_INCLUDE}/create-user-www.sh"
+    create_user_www
 
-        echo 'elasticsearch install success'
+    chown -R www:www ${ELASTICSEARCH_HOME}
+
+    # install elasticsearch-analysis-pinyin
+
+    # check
+    elasticsearch --version
+
+    echo 'elasticsearch install success'
 }

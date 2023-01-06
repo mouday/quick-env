@@ -23,7 +23,7 @@ function install_init(){
 # quick-env
 alias qk="bash ${QUICK_ENV_HOME}/main.sh"
 EOF
-    . /etc/profile.d/quick-env.sh
+    source /etc/profile.d/quick-env.sh
     
     echo '' > $init_lock_file
 }

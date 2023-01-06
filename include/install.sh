@@ -39,6 +39,14 @@ function install(){
         source "${QUICK_ENV_INCLUDE}/install-kibana.sh"
         install_kibana
         ;;
+    "elasticsearch-analysis-ik")
+        source "${QUICK_ENV_INCLUDE}/install-elasticsearch-analysis-ik.sh"
+        install_elasticsearch_analysis_ik
+        ;;
+    "elasticsearch-analysis-pinyin")
+        source "${QUICK_ENV_INCLUDE}/install-elasticsearch-analysis-pinyin.sh"
+        install_elasticsearch_analysis_pinyin
+        ;;
     *)
         echo "install [name]"
         echo "pyenv"
