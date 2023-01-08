@@ -2,11 +2,24 @@
 
 - https://github.com/mouday/quick-env/
 
+镜像
+
+- 华为云 https://mirrors.huaweicloud.com/home
+
 运维脚本整合，快速部署运行环境
 
 下载解压
 
 ```bash
+docker cp ./build/quick-env-full.tar.gz centos7.1:/opt/quick-env-full.tar.gz
+
+docker cp ./ centos7.1:/opt/quick-env-full
+
+# 解压
+mkdir -p ./quick-env-full && \
+tar -zxf quick-env-full.tar.gz -C ./quick-env-full && \
+cd ./quick-env-full
+
 # yum 安装必要的依赖
 $ bash main.sh init
 
@@ -19,7 +32,7 @@ $ qk version
 $ qk install pyenv
 
 # 安装3.7.0
-$ qk install python
+$ qk install python3
 
 # 安装python2.7 pip
 $ qk install pip
