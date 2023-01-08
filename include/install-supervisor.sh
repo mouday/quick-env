@@ -7,7 +7,7 @@
 ##################################
 
 function install_supervisor(){
-    # install pyenv
+    # check supervisorctl
     . /etc/profile
     if command -v supervisorctl >/dev/null 2>&1; then
         echo 'supervisor exists already!'
@@ -24,7 +24,7 @@ function install_supervisor(){
 
     supervisor_cache_filename="${QUICK_ENV_CACHE}/supervisor-4.2.5-py2.py3-none-any.whl"
 
-    # require pip 
+    # require pip
     source "${QUICK_ENV_INCLUDE}/install-pip.sh"
     install_pip
 
@@ -57,7 +57,11 @@ function install_supervisor(){
     # python setup.py install
 
     # 生成配置文件目录
-    mkdir -p /etc/supervisor/conf.d
+    if [ ! -e '/etc/supervisor/conf.d' ]; then
+        mkdir -p /etc/supervisor/conf.d
+    if
+
+    # override
     cp "${QUICK_ENV_CONFIG}/supervisord.conf" /etc/supervisor/supervisord.conf
     
     # 开机启动

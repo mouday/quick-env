@@ -6,7 +6,22 @@
 
 # 安装命令
 function install(){
-    case $1 in
+    arg=$1
+
+    # 拆分字符串参数为数组 
+    # python@3.7.0 => ('python' '3.7.0')
+    arr=(`echo $arg | tr '@' ' '`)
+
+    # 如果数组长度为2，则取第二个参数为版本号
+    if [ ${#arr[@]} -eq 2 ]; then
+        name=${arr[0]}
+        version=${arr[1]}
+    else
+        name=$arg
+        version=''
+    fi
+
+    case $name in
     "pyenv")
         source "${QUICK_ENV_HOME}/include/install-pyenv.sh"
         install_pyenv
@@ -15,9 +30,9 @@ function install(){
         source "${QUICK_ENV_HOME}/include/install-python-use-pyenv.sh"
         install_python_use_pyenv
         ;;
-    "python3")
-        source "${QUICK_ENV_HOME}/include/install-python3.sh"
-        install_python3
+    "python")
+        source "${QUICK_ENV_HOME}/include/install-python.sh"
+        install_python $version
         ;;
     "pip")
         source "${QUICK_ENV_INCLUDE}/install-pip.sh"

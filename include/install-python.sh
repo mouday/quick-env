@@ -2,17 +2,23 @@
 
 ##################################
 # 安装 python3
+# eg: qk install python  // default: 3.7.0
+# eg: qk install python@3.6.5
 ##################################
 
-function install_python3(){
+function install_python(){
+    version=$1
+
+    if [ ! $version ]; then
+        version='3.7.0'
+    fi
+
     # check python3
     . /etc/profile
     if command -v python3 >/dev/null 2>&1; then
         echo 'python3 exists already!'
         return 0
     fi
-
-    version='3.7.0'
 
     # Python-3.7.0.tar.xz
     python_cache_filename="${QUICK_ENV_CACHE}/Python-${version}.tar.xz"

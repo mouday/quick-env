@@ -26,6 +26,10 @@ function install_pip(){
     # 安装
     python ${pip_cache_filename}
 
+    # 设置下载源
+    pip config set global.index-url https://pypi.douban.com/simple/
+    pip config set install.trusted-host pypi.douban.com
+
     # 检查
     pip -V
 }
