@@ -25,7 +25,7 @@ export PATH="\$JAVA_HOME/bin:\$PATH"
 EOF
         source /etc/profile.d/jdk.sh
     else
-        yum install -y java-1.8.0-openjdk.x86_64
+        yum install --quiet --assumeyes java-1.8.0-openjdk.x86_64
     fi
 
     # 验证

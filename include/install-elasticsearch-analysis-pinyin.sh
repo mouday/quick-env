@@ -33,7 +33,7 @@ function install_elasticsearch_analysis_pinyin(){
     echo "extract elasticsearch-analysis-pinyin"
 
     # install unzip
-    yum install -y unzip
+    yum install --quiet --assumeyes unzip
 
     unzip -q $plugin_cache_filename -d "${QUICK_ENV_TEMP}"
     mv -f "${QUICK_ENV_TEMP}/elasticsearch" ${plugin_install_dir}

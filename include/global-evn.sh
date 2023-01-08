@@ -25,7 +25,8 @@ QUICK_ENV_INCLUDE="${QUICK_ENV_HOME}/include"
 QUICK_ENV_CONFIG="${QUICK_ENV_HOME}/config"
 
 # 安装目录
-QUICK_ENV_LOCAL="${QUICK_ENV_HOME}/local"
+# QUICK_ENV_LOCAL="${QUICK_ENV_HOME}/local"
+QUICK_ENV_LOCAL="/opt"
 if [ ! -e $QUICK_ENV_LOCAL ];then
     mkdir $QUICK_ENV_LOCAL
 fi

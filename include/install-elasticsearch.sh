@@ -73,5 +73,15 @@ EOF
     # check
     elasticsearch --version
 
+    # elasticsearch-analysis-pinyin
+    . "${QUICK_ENV_INCLUDE}/install-elasticsearch-analysis-pinyin.sh"
+    install_elasticsearch_analysis_pinyin
+
+    # elasticsearch-analysis-ik
+    . "${QUICK_ENV_INCLUDE}/install-elasticsearch-analysis-ik.sh"
+    install_elasticsearch_analysis_ik
+
     echo 'elasticsearch install success'
+
+    
 }

@@ -33,7 +33,7 @@ function install_elasticsearch_analysis_ik(){
     echo "extract elasticsearch-analysis-ik"
     
     # install unzip
-    yum install -y unzip
+    yum install --quiet --assumeyes unzip
 
     unzip -q $plugin_cache_filename -d "${QUICK_ENV_TEMP}"
     mv -f "${QUICK_ENV_TEMP}/elasticsearch" ${install_dir}

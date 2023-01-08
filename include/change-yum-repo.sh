@@ -13,7 +13,7 @@ function change_yum_repo(){
     # 2. 下载新的 CentOS-Base.repo 到 /etc/yum.repos.d/
     # CentOS 7
     
-    repo_filename="${QUICK_ENV_HOME}/cache/Centos-7.repo"
+    repo_filename="${QUICK_ENV_CACHE}/Centos-7.repo"
 
     if [ ! -e $repo_filename ]; then
         echo "Download Centos-7.repo"
@@ -29,5 +29,9 @@ function change_yum_repo(){
     yum makecache
 
     yum repolist
+
+    # bugfix 
+    # https://blog.csdn.net/winter_liang/article/details/54730888
+    rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 }   
 

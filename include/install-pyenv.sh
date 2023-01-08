@@ -8,24 +8,25 @@ function install_pyenv(){
     # check pyenv
     . /etc/profile
     if command -v pyenv >/dev/null 2>&1; then
-        echo 'pyenv exists already!'
-        exit 1
+        echo 'pyenv already installed!'
+        return 0
     fi
-
-    pyenv_cache_filename="${QUICK_ENV_CACHE}/pyenv-2.3.9-full.tar.gz"
+    
+    # config
+    pyenv_cache_file="${QUICK_ENV_CACHE}/pyenv-2.3.9-full.tar.gz"
     pyenv_download_url="https://gitee.com/mouday/download/releases/download/upload/pyenv-2.3.9-full.tar.gz"
 
     # 下载安装
-    if [ ! -e $pyenv_cache_filename ]; then
+    if [ ! -e $pyenv_cache_file ]; then
         echo "Download pyenv-2.3.9-full.tar.gz"
-        wget $pyenv_download_url -O $pyenv_cache_filename
+        wget $pyenv_download_url -O $pyenv_cache_file
     fi
 
     # 解压
-    if [ -f $pyenv_cache_filename ]; then
-        tar -zxvf $pyenv_cache_filename -C $QUICK_ENV_TEMP
+    if [ -f $pyenv_cache_file ]; then
+        tar -zxf $pyenv_cache_file
         # rename
-        mv "${QUICK_ENV_TEMP}/pyenv-2.3.9-full" "${QUICK_ENV_LOCAL}/pyenv-2.3.9"
+        mv "${QUICK_ENV_CACHE}/pyenv-2.3.9-full" "${QUICK_ENV_LOCAL}/pyenv"
     else
         exit 1
     fi
@@ -39,9 +40,6 @@ export PATH="\$PYENV_ROOT/bin:\$PATH"
 eval "\$(pyenv init -)"
 eval "\$(pyenv virtualenv-init -)"
 EOF
-
-    # 安装Python编译依赖
-    yum install -y gcc make zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel xz-devel
 
     # 生效
     . /etc/profile

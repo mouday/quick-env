@@ -11,9 +11,13 @@ function install(){
         source "${QUICK_ENV_HOME}/include/install-pyenv.sh"
         install_pyenv
         ;;
-    "python")
-        source "${QUICK_ENV_HOME}/include/install-python.sh"
-        install_python
+    "python-use-pyenv")
+        source "${QUICK_ENV_HOME}/include/install-python-use-pyenv.sh"
+        install_python_use_pyenv
+        ;;
+    "python3")
+        source "${QUICK_ENV_HOME}/include/install-python3.sh"
+        install_python3
         ;;
     "pip")
         source "${QUICK_ENV_INCLUDE}/install-pip.sh"

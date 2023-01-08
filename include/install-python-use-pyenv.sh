@@ -4,7 +4,7 @@
 # 安装 python
 ##################################
 
-function install_python(){
+function install_python_use_pyenv(){
 
     # install pyenv
     . /etc/profile
@@ -28,6 +28,10 @@ function install_python(){
         cp $python_cache_filename $python_pyenv_cache_filename
     fi
 
+    # 安装Python编译依赖
+    echo 'install '
+    yum install --quiet --assumeyes gcc make zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel xz-devel
+
     # use pyenv install python
     . /etc/profile
     pyenv install "${version}"
@@ -35,4 +39,5 @@ function install_python(){
     # check
     pyenv shell "${version}"
     python --version
+    echo ''
 }
