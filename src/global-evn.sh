@@ -19,7 +19,8 @@ if [ ! -e $QUICK_ENV_CACHE ];then
 fi
 
 # 包目录
-QUICK_ENV_INCLUDE="${QUICK_ENV_HOME}/include"
+QUICK_ENV_SRC="${QUICK_ENV_HOME}/src"
+QUICK_ENV_INCLUDE="${QUICK_ENV_HOME}/src/include"
 
 # 配置文件目录
 QUICK_ENV_CONFIG="${QUICK_ENV_HOME}/config"
@@ -27,6 +28,6 @@ QUICK_ENV_CONFIG="${QUICK_ENV_HOME}/config"
 # 安装目录
 # QUICK_ENV_LOCAL="${QUICK_ENV_HOME}/local"
 QUICK_ENV_LOCAL="/opt"
-if [ ! -e $QUICK_ENV_LOCAL ];then
-    mkdir $QUICK_ENV_LOCAL
-fi
+# if [ ! -e $QUICK_ENV_LOCAL ];then
+#     mkdir $QUICK_ENV_LOCAL
+# fi

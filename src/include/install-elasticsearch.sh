@@ -5,7 +5,7 @@
 # https://mouday.github.io/coding-tree/#/blog/elasticsearch/install
 ##################################
 
-function install_elasticsearch(){
+function install(){
     # check elasticsearch
     . /etc/profile
     if command -v elasticsearch >/dev/null 2>&1; then
@@ -15,7 +15,7 @@ function install_elasticsearch(){
 
     # require java
     source "${QUICK_ENV_INCLUDE}/install-jdk.sh"
-    install_jdk
+    install
     
     # version
     elasticsearch_version="5.6.16"
@@ -63,7 +63,7 @@ EOF
     # bugfix: main ERROR Could not register mbeans
     # https://pengshiyu.blog.csdn.net/article/details/86557744
     # 创建www用户
-    source "${QUICK_ENV_INCLUDE}/create-user-www.sh"
+    . "${QUICK_ENV_SRC}/utils/create-user-www.sh"
     create_user_www
 
     chown -R www:www ${ELASTICSEARCH_HOME}
@@ -75,13 +75,11 @@ EOF
 
     # elasticsearch-analysis-pinyin
     . "${QUICK_ENV_INCLUDE}/install-elasticsearch-analysis-pinyin.sh"
-    install_elasticsearch_analysis_pinyin
+    install
 
     # elasticsearch-analysis-ik
     . "${QUICK_ENV_INCLUDE}/install-elasticsearch-analysis-ik.sh"
-    install_elasticsearch_analysis_ik
+    install
 
-    echo 'elasticsearch install success'
-
-    
+    echo 'elasticsearch install success'    
 }

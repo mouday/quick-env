@@ -6,7 +6,7 @@
 # https://pengshiyu.blog.csdn.net/article/details/128494747#51Python_363
 ##################################
 
-function install_supervisor(){
+function install(){
     # check supervisorctl
     . /etc/profile
     if command -v supervisorctl >/dev/null 2>&1; then
@@ -15,7 +15,7 @@ function install_supervisor(){
     fi
 
     # 创建www用户
-    source "${QUICK_ENV_INCLUDE}/create-user-www.sh"
+    . "${QUICK_ENV_SRC}/utils/create-user-www.sh"
     create_user_www
 
     # supervisor
@@ -26,35 +26,13 @@ function install_supervisor(){
 
     # require pip
     source "${QUICK_ENV_INCLUDE}/install-pip.sh"
-    install_pip
+    install
 
     if [ -e $supervisor_cache_filename ]; then
         pip install $supervisor_cache_filename
     else
         pip install supervisor
     fi
-
-    # supervisor_cache_filename="${QUICK_ENV_CACHE}/supervisor-4.2.5.tar.gz"
-    # supervisor_download_url="https://files.pythonhosted.org/packages/ce/37/517989b05849dd6eaa76c148f24517544704895830a50289cbbf53c7efb9/supervisor-4.2.5.tar.gz"
-    
-    # # 下载安装
-    # if [ ! -e $supervisor_cache_filename ]; then
-    #     echo "Download supervisor"
-    #     wget $supervisor_download_url -O $supervisor_cache_filename
-    # fi
-
-    # # 解压
-    # if [ -f $supervisor_cache_filename ]; then
-    #     tar -zxvf $supervisor_cache_filename -C $QUICK_ENV_TEMP
-    # else
-    #     exit 1
-    # fi
-
-    # # install
-    # cd "${QUICK_ENV_TEMP}/supervisor-4.2.5"
-    
-    # need setuptools
-    # python setup.py install
 
     # 生成配置文件目录
     if [ ! -e '/etc/supervisor/conf.d' ]; then

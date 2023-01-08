@@ -6,7 +6,7 @@
 # eg: qk install python@3.6.5
 ##################################
 
-function install_python(){
+function install(){
     version=$1
 
     if [ ! $version ]; then
@@ -14,18 +14,19 @@ function install_python(){
     fi
 
     # check python3
-    . /etc/profile
-    if command -v python3 >/dev/null 2>&1; then
-        echo 'python3 exists already!'
-        return 0
-    fi
+    # . /etc/profile
+    # if command -v python3 >/dev/null 2>&1; then
+    #     echo 'python3 exists already!'
+    #     return 0
+    # fi
 
     # Python-3.7.0.tar.xz
     python_cache_filename="${QUICK_ENV_CACHE}/Python-${version}.tar.xz"
     python_source_dir="${QUICK_ENV_CACHE}/Python-${version}"
 
     # 应该考虑安装多个版本
-    python_install_dir="${QUICK_ENV_LOCAL}/python@${version}"
+    python_install_dir="${QUICK_ENV_LOCAL}/python-${version}"
+    # https://mirrors.huaweicloud.com/python/
     python_download_url="https://mirrors.huaweicloud.com/python/${version}/Python-${version}.tar.xz"
 
     # 如果目录被占用就不再继续
@@ -47,7 +48,7 @@ function install_python(){
 
     # 解压
     if [ -e $python_cache_filename ]; then
-        mkdir -p $python_source_dir
+        # mkdir -p $python_source_dir
         tar -xJf $python_cache_filename -C $QUICK_ENV_CACHE
     else
         echo "python cache file not exists!"
@@ -63,7 +64,7 @@ function install_python(){
     fi
 
     # install python
-    echo 'install python3'
+    echo "install python@${version}"
     if [ ! -e $python_source_dir ]; then
         echo "python3 source dir not exists!"
         return 1

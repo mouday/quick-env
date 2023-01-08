@@ -4,12 +4,12 @@
 # 安装 elasticsearch-analysis-pinyin
 ##################################
 
-function install_elasticsearch_analysis_pinyin(){
+function install(){
     # require elasticsearch
     . /etc/profile
 
     source "${QUICK_ENV_INCLUDE}/install-elasticsearch.sh"
-    install_elasticsearch
+    install
 
     # version
     elasticsearch_version="5.6.16"

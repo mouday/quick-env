@@ -4,7 +4,7 @@
 # 安装 python
 ##################################
 
-function install_python_use_pyenv(){
+function install(){
 
     # install pyenv
     . /etc/profile

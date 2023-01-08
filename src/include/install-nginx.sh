@@ -4,7 +4,7 @@
 # 安装 nginx
 ##################################
 
-function install_nginx(){
+function install(){
     # check nginx
     . /etc/profile
     if command -v nginx >/dev/null 2>&1; then
@@ -29,7 +29,7 @@ function install_nginx(){
     yum -y install make zlib zlib-devel gcc gcc-c++ libtool  openssl openssl-devel pcre pcre-devel ncurses-devel perl
 
     # 2、创建用户
-    source "${QUICK_ENV_INCLUDE}/create-user-www.sh"
+    . "${QUICK_ENV_SRC}/utils/create-user-www.sh"
     create_user_www
 
     # 下载nginx

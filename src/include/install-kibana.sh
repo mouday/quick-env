@@ -5,7 +5,7 @@
 # https://mouday.github.io/coding-tree/#/blog/elasticsearch/install
 ##################################
 
-function install_kibana(){
+function install(){
     # check kibana
     . /etc/profile
     if command -v kibana >/dev/null 2>&1; then
@@ -15,7 +15,7 @@ function install_kibana(){
     
     # require java
     source "${QUICK_ENV_INCLUDE}/install-jdk.sh"
-    install_jdk
+    install
 
     kibana_version="5.6.16"
 

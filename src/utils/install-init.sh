@@ -30,7 +30,7 @@ function install_init(){
     fi
     
     # 修改yum源为阿里云源
-    . "${QUICK_ENV_INCLUDE}/change-yum-repo.sh"
+    . "${QUICK_ENV_SRC}/utils/change-yum-repo.sh"
     change_yum_repo
 
     # 修改pip源
