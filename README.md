@@ -20,7 +20,7 @@
 ```bash
 docker cp ./build/quick-env-full.tar.gz centos7.1:/opt/quick-env-full.tar.gz
 
-docker cp ./ centos7.1:/opt/quick-env-full
+docker cp ./src centos7.1:/opt/quick-env-full/
 
 # 解压
 mkdir -p ./quick-env-full && \

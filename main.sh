@@ -56,6 +56,34 @@ function main(){
             echo_install_names
         fi
         ;;
+    "uninstall")
+        # 拆分字符串参数为数组
+        # python-3.7.0 => ('python' '3.7.0')
+        arr=(`echo $name | tr '-' ' '`)
+
+        # 如果数组长度为2，则取第二个参数为版本号
+        if [ ${#arr[@]} -eq 2 ]; then
+            name=${arr[0]}
+            version=${arr[1]}
+        else
+            name=$name
+            version=''
+        fi
+
+        echo "${name} ${version}"
+
+        install_filename="${QUICK_ENV_INCLUDE}/install-${name}.sh"
+        echo $install_filename
+
+        if [ -e $install_filename ]; then
+            . $install_filename
+            eval "uninstall_${name}" $version
+        else
+            # 安装提示
+            . "${QUICK_ENV_HOME}/src/utils/echo-install-names.sh"
+            echo_install_names
+        fi
+        ;;
     "version")
         # 查看版本号
          source "${QUICK_ENV_HOME}/version.sh"
