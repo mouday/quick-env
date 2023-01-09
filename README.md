@@ -68,6 +68,7 @@ $ qk install kibana
 
 # 安装16.9.0
 $ qk install nodejs
+$ qk install nodejs-16.9.1
 ```
 
 ## 管理进程
