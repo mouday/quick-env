@@ -4,7 +4,7 @@
 # 安装 pyenv
 ##################################
 
-function install(){
+function install_pyenv(){
     # check pyenv
     . /etc/profile
     if command -v pyenv >/dev/null 2>&1; then

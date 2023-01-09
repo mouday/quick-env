@@ -4,12 +4,12 @@
 # 安装 elasticsearch-analysis-ik
 ##################################
 
-function install(){
+function install_elasticsearch_analysis_ik(){
     # require elasticsearch
     . /etc/profile
 
     source "${QUICK_ENV_INCLUDE}/install-elasticsearch.sh"
-    install
+    install_elasticsearch
 
     # version
     elasticsearch_version="5.6.16"

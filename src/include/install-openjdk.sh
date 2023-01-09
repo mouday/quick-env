@@ -4,7 +4,7 @@
 # 安装 openjdk
 ##################################
 
-function install(){
+function install_openjdk(){
     # check java
     . /etc/profile
     if command -v java >/dev/null 2>&1; then

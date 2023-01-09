@@ -4,7 +4,7 @@
 # 安装 nginx
 ##################################
 
-function install(){
+function install_nginx(){
     # check nginx
     . /etc/profile
     if command -v nginx >/dev/null 2>&1; then

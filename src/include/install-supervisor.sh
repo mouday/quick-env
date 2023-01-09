@@ -6,7 +6,7 @@
 # https://pengshiyu.blog.csdn.net/article/details/128494747#51Python_363
 ##################################
 
-function install(){
+function install_supervisor(){
     # check supervisorctl
     . /etc/profile
     if command -v supervisorctl >/dev/null 2>&1; then
@@ -26,7 +26,7 @@ function install(){
 
     # require pip
     source "${QUICK_ENV_INCLUDE}/install-pip.sh"
-    install
+    install_pip
 
     if [ -e $supervisor_cache_filename ]; then
         pip install $supervisor_cache_filename

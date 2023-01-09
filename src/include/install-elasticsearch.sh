@@ -5,7 +5,7 @@
 # https://mouday.github.io/coding-tree/#/blog/elasticsearch/install
 ##################################
 
-function install(){
+function install_elasticsearch(){
     # check elasticsearch
     . /etc/profile
     if command -v elasticsearch >/dev/null 2>&1; then
@@ -15,7 +15,7 @@ function install(){
 
     # require java
     source "${QUICK_ENV_INCLUDE}/install-jdk.sh"
-    install
+    install_jdk
     
     # version
     elasticsearch_version="5.6.16"
@@ -75,11 +75,11 @@ EOF
 
     # elasticsearch-analysis-pinyin
     . "${QUICK_ENV_INCLUDE}/install-elasticsearch-analysis-pinyin.sh"
-    install
+    install_elasticsearch_analysis_pinyin
 
     # elasticsearch-analysis-ik
     . "${QUICK_ENV_INCLUDE}/install-elasticsearch-analysis-ik.sh"
-    install
+    install_elasticsearch_analysis_ik
 
     echo 'elasticsearch install success'    
 }

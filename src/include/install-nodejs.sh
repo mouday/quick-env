@@ -4,7 +4,7 @@
 # install nodejs
 ##################################
 
-function install() {
+function install_nodejs() {
     version=$1
 
     if [ ! $version ]; then

@@ -3,10 +3,10 @@
 ##################################
 # 安装 python3
 # eg: qk install python  // default: 3.7.0
-# eg: qk install python@3.6.5
+# eg: qk install python-3.6.5
 ##################################
 
-function install(){
+function install_python(){
     version=$1
 
     if [ ! $version ]; then

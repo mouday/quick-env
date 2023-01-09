@@ -5,7 +5,7 @@
 # https://pengshiyu.blog.csdn.net/article/details/128492350
 ##################################
 
-function install(){
+function install_pip(){
     # check pip
     . /etc/profile
     if command -v pip >/dev/null 2>&1; then

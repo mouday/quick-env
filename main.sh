@@ -41,11 +41,15 @@ function main(){
             version=''
         fi
 
+        echo "${name} ${version}"
+
         install_filename="${QUICK_ENV_INCLUDE}/install-${name}.sh"
+        echo $install_filename
+
         if [ -e $install_filename ]; then
             # 安装
             . $install_filename
-            install $version
+            eval "install_${name}" $version
         else
             # 安装提示
             . "${QUICK_ENV_HOME}/src/utils/echo-install-names.sh"

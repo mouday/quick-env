@@ -12,7 +12,7 @@
 # https://www.injdk.cn/
 ##################################
 
-function install(){
+function install_jdk(){
     # check java
     . /etc/profile
     if command -v java >/dev/null 2>&1; then
@@ -26,6 +26,12 @@ function install(){
     # https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/linux/OpenJDK8U-jdk_x64_linux_hotspot_8u352b08.tar.gz
     # https://d6.injdk.cn/openjdk/openjdk/8/openjdk-8u41-src-b04-14_jan_2020.zip
     jdk_download_url='https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz'
+
+    # download
+    if [ ! -e $jdk_cache_filename ]; then
+        echo "Download jdk-${version}.tar.xz"
+        wget $jdk_download_url -O $jdk_cache_filename
+    fi
 
     if [ -e $jdk_cache_filename ]; then
         echo "jdk extracting..."

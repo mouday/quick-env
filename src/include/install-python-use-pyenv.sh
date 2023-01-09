@@ -1,10 +1,10 @@
 #!/usr/bin/bash
 
 ##################################
-# 安装 python
+# 安装 python python_use_pyenv
 ##################################
 
-function install(){
+function install_python_use_pyenv(){
 
     # install pyenv
     . /etc/profile
