@@ -84,9 +84,9 @@ EOF
     fi
 
     # 2、创建用户
-    id -u redis >/dev/null 2>&1
-    [ $? -ne 0 ] && useradd -M -s /sbin/nologin redis
-    chown -R redis:redis ${redis_install_dir}
+    # id -u redis >/dev/null 2>&1
+    # [ $? -ne 0 ] && useradd -M -s /sbin/nologin redis
+    # chown -R redis:redis ${redis_install_dir}
     
     systemctl enable redis
     systemctl start redis
