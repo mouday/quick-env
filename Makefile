@@ -13,6 +13,7 @@ build-full:
 # 打包-不包括缓存
 .PHONY: build
 build:
+	make clean
 	. ./src/version.sh && mkdir -p ./build/quick-env-$${VERSION}
 	. ./src/version.sh && cp -R ./src/* ./build/quick-env-$${VERSION}
 	. ./src/version.sh && tar -zcvf ./build/quick-env-$${VERSION}.tar.gz -C ./build quick-env-$${VERSION}

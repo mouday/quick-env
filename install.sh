@@ -16,6 +16,6 @@ EOF
 
 echo '*************************************'
 echo '* quick-env install success'
-echo '* source /etc/profile.d/quick-env.sh'
+echo '* $ source /etc/profile.d/quick-env.sh'
 echo '* $ qk version'
 echo '*************************************'

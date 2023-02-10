@@ -3,6 +3,7 @@
 Linux 缺失的软件包的管理器
 
 - https://github.com/mouday/quick-env/
+- https://gitee.com/mouday/quick-env/
 
 镜像
 
