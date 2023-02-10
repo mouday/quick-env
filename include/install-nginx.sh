@@ -141,7 +141,7 @@ EOF
 
     echo '*************************************'
     echo '* nginx install success'
-    echo '* source /etc/profile.d/nginx.sh'
+    echo '* source /etc/profile.d/nginx.sh && nginx -v'
     echo '* systemctl status nginx'
     echo '*************************************'
 }

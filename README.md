@@ -1,6 +1,6 @@
 # quick-env
 
-Linux 缺失的软件包的管理器
+Linux 缺失的软件包的管理器，运维脚本整合，快速部署运行环境
 
 - https://github.com/mouday/quick-env/
 - https://gitee.com/mouday/quick-env/
@@ -8,16 +8,20 @@ Linux 缺失的软件包的管理器
 
 ## 安装
 
+安装最新版本
+
 ```bash
+# github源
 curl https://raw.githubusercontent.com/mouday/quick-env/master/installer.sh | bash
 
+# 镜像
 curl https://ghproxy.com/https://raw.githubusercontent.com/mouday/quick-env/master/installer.sh | bash
-
 ```
 
-Github源
+安装指定版本
 
 ```bash
+# Github源
 export version=0.0.3 && \
 yum install -y wget && \
 wget https://github.com/mouday/quick-env/archive/refs/tags/${version}.tar.gz -O quick-env-${version}.tar.gz && \
@@ -26,34 +30,26 @@ cd quick-env-${version} && \
 bash install.sh
 ```
 
-镜像
+手动下载安装
 
-- 华为云 https://mirrors.huaweicloud.com/home
+```bash
+# 解压
+tar -zxf quick-env-0.0.3.tar.gz && \
+cd ./quick-env-0.0.3
 
-运维脚本整合，快速部署运行环境
+# yum 安装必要的依赖
+$ bash install.sh
+```
 
 安装原则
 
-1. 第三方统一安装在`/opt` 目录下
-2. 如果遇到多个版本，则按照`软件-版本号`的方式命名
-3. 系统级软件一般只安装一个版本，例如nginx；如果安装第二个版本，则按照第二条命名
+1. 第三方统一默认安装在`/opt` 目录下
+2. 按照`软件-版本号`的方式命名，以便安装多个版本
 
-
-下载解压
+## 使用
 
 ```bash
-docker cp ./build/quick-env-full.tar.gz centos7.1:/opt/quick-env-full.tar.gz
-
-docker cp ./src centos7.1:/opt/quick-env-full/
-
-# 解压
-mkdir -p ./quick-env-full && \
-tar -zxf quick-env-full.tar.gz -C ./quick-env-full && \
-cd ./quick-env-full
-
-# yum 安装必要的依赖
-$ bash main.sh init
-
+# 首次运行
 source /etc/profile.d/quick-env.sh
 
 # 查看版本号
@@ -69,7 +65,7 @@ $ qk install python-3.6.5
 # 安装python2.7 pip
 $ qk install pip
 
-# 安装1.8.0
+# 安装nginx
 $ qk install nginx
 
 # 安装4.2.5
@@ -127,10 +123,10 @@ docker启动centos7
 docker run \
 --privileged \
 -itd \
---name env2 \
+--name env3 \
 -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 centos:centos7 /usr/sbin/init && \
-docker exec -it env2 /bin/bash
+docker exec -it env3 /bin/bash
 
 make build && docker cp ./build/quick-env-0.0.1.tar.gz nginx:/opt
 
@@ -139,4 +135,13 @@ docker cp ./src/ nginx1:/opt/quick-env-0.0.1/
 tar -zxf quick-env-0.0.1.tar.gz
 
 docker cp ./src/ nginx:/opt/quick-env-0.0.1/
+
+docker cp ./build/quick-env-full.tar.gz centos7.1:/opt/quick-env-full.tar.gz
+
+docker cp ./src centos7.1:/opt/quick-env-full/
+
 ```
+
+镜像
+
+- 华为云 https://mirrors.huaweicloud.com/home
