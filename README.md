@@ -6,6 +6,26 @@ Linux 缺失的软件包的管理器
 - https://gitee.com/mouday/quick-env/
 - https://gitcode.net/mouday/quick-env
 
+## 安装
+
+```bash
+curl https://raw.githubusercontent.com/mouday/quick-env/master/installer.sh | bash
+
+curl https://ghproxy.com/https://raw.githubusercontent.com/mouday/quick-env/master/installer.sh | bash
+
+```
+
+Github源
+
+```bash
+export version=0.0.3 && \
+yum install -y wget && \
+wget https://github.com/mouday/quick-env/archive/refs/tags/${version}.tar.gz -O quick-env-${version}.tar.gz && \
+tar -zxf quick-env-${version}.tar.gz && \
+cd quick-env-${version} && \
+bash install.sh
+```
+
 镜像
 
 - 华为云 https://mirrors.huaweicloud.com/home
@@ -107,10 +127,10 @@ docker启动centos7
 docker run \
 --privileged \
 -itd \
---name env1 \
+--name env2 \
 -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 centos:centos7 /usr/sbin/init && \
-docker exec -it env1 /bin/bash
+docker exec -it env2 /bin/bash
 
 make build && docker cp ./build/quick-env-0.0.1.tar.gz nginx:/opt
 
