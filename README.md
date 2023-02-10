@@ -132,14 +132,14 @@ docker启动centos7
 docker run \
 --privileged \
 -itd \
---name env3 \
+--name env \
 -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 centos:centos7 /usr/sbin/init && \
-docker exec -it env3 /bin/bash
+docker exec -it env /bin/bash
 
 make build && docker cp ./build/quick-env-0.0.1.tar.gz nginx:/opt
 
-docker cp ./src/ nginx1:/opt/quick-env-0.0.1/
+docker cp ./ env:/opt/quick-env-0.0.1/
 
 tar -zxf quick-env-0.0.1.tar.gz
 
