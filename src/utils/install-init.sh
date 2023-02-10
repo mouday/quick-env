@@ -37,17 +37,4 @@ function install_init(){
 
     # 安装必要依赖
     yum install --quiet --assumeyes git wget vim
-
-    cat > /etc/profile.d/quick-env.sh <<EOF
-# quick-env
-alias qk="bash ${QUICK_ENV_HOME}/main.sh"
-EOF
-
-    # lock
-    echo '' > $init_lock_file
-
-    echo '*************************************'
-    echo '* quick-env install success'
-    echo '* source /etc/profile.d/quick-env.sh && qk version'
-    echo '*************************************'
 }

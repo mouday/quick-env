@@ -1,22 +1,28 @@
-#!/usr/bin/bash
+#!/usr/bash
 
 ##################################
 # 安装 nginx
+# http://nginx.org/en/download.html
+# ref https://pengshiyu.blog.csdn.net/article/details/103023669
 ##################################
 
 function install_nginx(){
+    version=$1
+
+    if [ ! $version ]; then
+        version='1.22.1' # 19 Oct 2022
+    fi
+
     # check nginx
     . /etc/profile
     if command -v nginx >/dev/null 2>&1; then
         echo 'nginx exists already!'
         return 0
     fi
-    
-    version="1.8.0"
 
     nginx_cache_filename="${QUICK_ENV_CACHE}/nginx-${version}.tar.gz"
     nginx_source_dir="${QUICK_ENV_CACHE}/nginx-${version}"
-    nginx_install_dir="${QUICK_ENV_LOCAL}/nginx"
+    nginx_install_dir="${QUICK_ENV_LOCAL}/nginx-${version}"
     nginx_download_url="http://nginx.org/download/nginx-${version}.tar.gz"
 
     if [ -e  $nginx_install_dir ]; then
@@ -24,45 +30,65 @@ function install_nginx(){
         return 0
     fi
 
-    # install nginx
     # 1、安装编译工具
-    yum -y install make zlib zlib-devel gcc gcc-c++ libtool  openssl openssl-devel pcre pcre-devel ncurses-devel perl
+    echo 'install dependencies'
+    yum -y install make wget zlib zlib-devel gcc gcc-c++ libtool openssl openssl-devel pcre pcre-devel ncurses-devel perl 1>/dev/null
+    
+    if [ $? != 0 ]; then
+        echo 'nginx install dependencies error'
+        exit 1
+    fi
 
     # 2、创建用户
-    . "${QUICK_ENV_SRC}/utils/create-user-www.sh"
-    create_user_www
+    # . "${QUICK_ENV_SRC}/utils/create-user-www.sh"
+    # create_user_www
 
     # 下载nginx
     if [ ! -e $nginx_cache_filename ]; then
         echo "Download nginx"
         wget $nginx_download_url -O $nginx_cache_filename
+    else
+        echo 'using nginx cache file'
     fi
 
     # 解压
-    if [ -e $nginx_cache_filename ]; then
-        tar -zxf $nginx_cache_filename
-    else
+    if [ ! -e $nginx_cache_filename ]; then
         echo "nginx cache file not exists!"
         exit 1
     fi
 
-    cd $nginx_source_dir
+    tar -zxf $nginx_cache_filename -C $QUICK_ENV_CACHE
+
+    # 安装
+    if [ ! -e $nginx_source_dir ]; then
+        echo "nginx source not exists!"
+        exit 1
+    fi
 
     echo 'nginx installing'
+    cd $nginx_source_dir
 
     ./configure \
     --prefix=${nginx_install_dir} \
-    --user=${run_user} \
-    --group=${run_group} \
     --with-http_stub_status_module \
     --with-http_ssl_module \
     --with-http_gzip_static_module \
     --with-pcre \
     --with-http_realip_module \
     --with-http_sub_module \
-    --quiet
+    1>/dev/null
+    
+    if [ $? != 0 ]; then
+        echo 'nginx configure error'
+        exit 1
+    fi
 
-    make && make install
+    make 1>/dev/null && make install 1>/dev/null
+    
+    if [ $? != 0 ]; then
+        echo 'nginx make error'
+        exit 1
+    fi
 
     # 返回
     cd -
@@ -88,15 +114,12 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStartPost=/bin/sleep 0.1
+PIDFile=${nginx_install_dir}/logs/nginx.pid
 ExecStartPre=${nginx_install_dir}/sbin/nginx -t -c ${nginx_install_dir}/conf/nginx.conf
 ExecStart=${nginx_install_dir}/sbin/nginx -c ${nginx_install_dir}/conf/nginx.conf
-ExecReload=/bin/kill -s HUP \$MAINPID
+ExecReload=${nginx_install_dir}/sbin/nginx -s reload
 ExecStop=/bin/kill -s QUIT \$MAINPID
-TimeoutStartSec=120
-LimitNOFILE=1000000
-LimitNPROC=1000000
-LimitCORE=1000000
+PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target
@@ -104,10 +127,10 @@ EOF
     fi
 
     # 修改配置文件
-    mv "${nginx_install_dir}/conf/nginx.conf" "${nginx_install_dir}/conf/nginx.conf.bak"
-    cp "${QUICK_ENV_CONFIG}/nginx.conf" "${nginx_install_dir}/conf/nginx.conf"
+    # mv "${nginx_install_dir}/conf/nginx.conf" "${nginx_install_dir}/conf/nginx.conf.bak"
+    # cp "${QUICK_ENV_CONFIG}/nginx.conf" "${nginx_install_dir}/conf/nginx.conf"
     
-    mkdir -p "${nginx_install_dir}/conf/vhost"
+    # mkdir -p "${nginx_install_dir}/conf/vhost"
 
     systemctl enable nginx
     systemctl start nginx

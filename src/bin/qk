@@ -1,0 +1,9 @@
+#!/bin/bash
+
+##################################
+# 快捷方式
+##################################
+
+QUICK_ENV_HOME=$(dirname $( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd))
+
+. $QUICK_ENV_HOME/main.sh

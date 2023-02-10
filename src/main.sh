@@ -9,12 +9,13 @@
 # QUICK_ENV_HOME=$(dirname $(readlink -f "$0"))
 
 # ref: https://www.cnblogs.com/zsg88/p/16732429.html
+
 QUICK_ENV_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 # echo $QUICK_ENV_HOME
 
 # 全局环境变量
-. "${QUICK_ENV_HOME}/src/global-evn.sh"
+. "${QUICK_ENV_HOME}/global-evn.sh"
 
 # 入口函数
 function main(){
@@ -22,11 +23,11 @@ function main(){
     name=$2
 
     case $action in
-    "init")
-        # 必要的初始化
-        source "${QUICK_ENV_SRC}/utils/install-init.sh"
-        install_init
-        ;;
+    # "init")
+    #     # 必要的初始化
+    #     source "${QUICK_ENV_SRC}/utils/install-init.sh"
+    #     install_init
+    #     ;;
     "install")
         # 拆分字符串参数为数组
         # python-3.7.0 => ('python' '3.7.0')
@@ -52,7 +53,7 @@ function main(){
             eval "install_${name}" $version
         else
             # 安装提示
-            . "${QUICK_ENV_HOME}/src/utils/echo-install-names.sh"
+            . "${QUICK_ENV_HOME}/utils/echo-install-names.sh"
             echo_install_names
         fi
         ;;
@@ -96,4 +97,4 @@ function main(){
 }
 
 # command ...args
-main $1 $2
+main $@

@@ -20,7 +20,7 @@ fi
 
 # 包目录
 QUICK_ENV_SRC="${QUICK_ENV_HOME}/src"
-QUICK_ENV_INCLUDE="${QUICK_ENV_HOME}/src/include"
+QUICK_ENV_INCLUDE="${QUICK_ENV_HOME}/include"
 
 # 配置文件目录
 QUICK_ENV_CONFIG="${QUICK_ENV_HOME}/config"
