@@ -115,6 +115,15 @@ supervisorctl status kibana
 
 > 部分源码参考: https://oneinstack.com/
 
+# 自定义安装
+
+如需自定义安装路径，可在`global-evn.sh` 中修改参数
+
+```bash
+# 安装目录
+QUICK_ENV_LOCAL="/opt"
+```
+
 ## 测试
 
 docker启动centos7

@@ -90,6 +90,12 @@ function main(){
          source "${QUICK_ENV_HOME}/version.sh"
          echo $VERSION
         ;;
+    "help")
+        echo "wecome use quick env!"
+        echo "eg:"
+        echo "$ qk install nginx-1.22.1"
+        echo "more info please see: https://github.com/mouday/quick-env"
+        ;;
     *)
         echo "请输入: help"
         ;;
