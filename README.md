@@ -107,11 +107,10 @@ docker启动centos7
 docker run \
 --privileged \
 -itd \
---name env \
+--name env1 \
 -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-centos:centos7 /usr/sbin/init
-
-docker exec -it env /bin/bash
+centos:centos7 /usr/sbin/init && \
+docker exec -it env1 /bin/bash
 
 make build && docker cp ./build/quick-env-0.0.1.tar.gz nginx:/opt
 
