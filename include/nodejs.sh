@@ -6,6 +6,7 @@
 
 DEFAULT_VERSION='19.6.0' # 03-Feb-2023 00:13
 
+# 下载
 function download() {
     version=$1
     # echo "download ${version}"
@@ -40,8 +41,8 @@ function install() {
     # download
     download $version
 
-    if [ $? != 0 ]; then
-        echo 'download error'
+    if [ ! -e $cache_filename ]; then
+        echo "${cache_filename} not found"
         exit 1
     fi
     
@@ -65,7 +66,7 @@ function uninstall() {
         rm -rf /etc/profile.d/nodejs.sh
     fi
 
-    echo "uninstall nodejs"
+    echo "uninstall nodejs successful"
 }
 
 # 版本切换
@@ -85,7 +86,7 @@ export PATH=\$NODE_HOME/bin:\$PATH
 EOF
 
     echo '*************************************'
-    echo "* nodejs@${version} install success"
+    echo "* use nodejs@${version}"
     echo '* source /etc/profile.d/nodejs.sh && node --version'
     echo '*************************************'
 }
