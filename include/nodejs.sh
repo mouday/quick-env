@@ -90,37 +90,3 @@ EOF
     echo '* source /etc/profile.d/nodejs.sh && node --version'
     echo '*************************************'
 }
-
-# 入口
-function action_main(){
-    local action=$1
-    local version=$2
-    
-    if [ ! $version ]; then
-        version=$DEFAULT_VERSION
-    fi
-
-    # echo "action ${action} ${version}"
-
-    case $action in
-    "install")
-        # echo 'install'
-        install $version
-        ;;
-    "uninstall")
-        # echo 'uninstall'
-        uninstall $version
-        ;;
-    "use")
-        # echo 'use'
-        use $version
-        ;;
-    "download")
-        # echo 'download'
-        download $version
-        ;;
-    *)
-        echo "install, uninstall, use, download"
-        ;;
-    esac
-}

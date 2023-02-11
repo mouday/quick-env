@@ -6,6 +6,16 @@
 #   # do something
 # fi
 function in_array() {
+    if [ ! $1 ]; then
+        echo "false"
+        return 1
+    fi
+
+    if [ ! $2 ]; then
+        echo "false"
+        return 1
+    fi
+
     local list=`echo $1 | tr ',' ' '`
     local value=$2
     
