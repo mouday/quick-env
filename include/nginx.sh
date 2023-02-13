@@ -101,6 +101,9 @@ function install(){
         exit 1
     fi
 
+    # 下载
+    download $version
+
     # 解压
     if [ ! -e $cache_filename ]; then
         echo "nginx cache file not exists!"
